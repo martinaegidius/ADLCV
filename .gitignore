@@ -1,5 +1,12 @@
 *.*
-*
+*/*/data
+*/*/.data
+*/*/*/data
+*/*/*/.data
+*/*/*/*/data
+*/*/*/*/.data
+
+
 !*.py
 !*.ipynb
 !*.gitignore
