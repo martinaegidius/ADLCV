@@ -69,12 +69,12 @@ class Diffusion:
         sqrt_one_minus_alpha_bar = torch.sqrt(1-self.alphas_bar[t]) # HINT: calculate the sqrt of 1 - alphas_bar at time step t
         sqrt_one_minus_alpha_bar = sqrt_one_minus_alpha_bar[:, None, None, None]# match image dimensions
         
-        noise = torch.normal(mean=torch.Tensor([0.0]),std=torch.ones_like(x)).to(self.device) # HINT: sample noise from a normal distribution. It should match the shape of x 
+        noise = torch.normal(mean=torch.Tensor([0.0]).to(self.device),std=torch.ones_like(x)).to(self.device) # HINT: sample noise from a normal distribution. It should match the shape of x 
         #I think they messed up notation using identity matrix - should be std=1 for each pixel
         assert noise.shape == x.shape, 'Invalid shape of noise'
         
         #note to hint: we use sampled noise instead, so it is different
-        x_noised = sqrt_alpha_bar*x + sqrt_one_minus_alpha_bar*noise # HINT: Create the noisy version of x. See Eq. 4 in the ddpm paper at page 2
+        x_noised = (sqrt_alpha_bar*x + sqrt_one_minus_alpha_bar*noise).to(self.device) # HINT: Create the noisy version of x. See Eq. 4 in the ddpm paper at page 2
 
         return x_noised, noise #return sample & label
     
@@ -103,7 +103,7 @@ class Diffusion:
         # HINT: Having calculate the mean and std of p(x{x_t} | x_t), we sample noise from a normal distribution.
         # see line 3 of the Algorithm 2 (Sampling) at page 4 of the ddpm paper.
         if(t[0]>1): #t is a batch tensor of identical sample time-steps. Can simply check first element
-            noise = torch.normal(mean=torch.Tensor([0]),std=torch.ones_like(x_t)).to(self.device)
+            noise = torch.normal(mean=torch.Tensor([0]).to(self.device),std=torch.ones_like(x_t)).to(self.device)
         else:
             noise = torch.zeros_like(x_t).to(self.device)
         x_t_prev = mean+std*noise # Calculate x_{t-1}, see line 4 of the Algorithm 2 (Sampling) at page 4 of the ddpm paper.
