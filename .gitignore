@@ -5,7 +5,8 @@
 */*/*/.data
 */*/*/*/data
 */*/*/*/.data
-
+week5_nerf/ALDCV_EX5/data/*
+week5_nerf/ALDCV_EX5/models/*
 
 !*.py
 !*.ipynb
